@@ -1,23 +1,27 @@
-let myLeads = `["www.awesomelead.com"]`;
-
-myLeads = JSON.parse(myLeads);
-
-myLeads.push("www.lead2.com");
-
-myLeads = JSON.stringify(myLeads);
-
-console.log(typeof myLeads);
-
+let myLeads = [];
 const inputEl = document.getElementById("input-el");
 const inputBtn = document.getElementById("input-btn");
 const ulEl = document.getElementById("ul-el");
+const deleteBtn = document.getElementById("delete-btn");
 
-localStorage.getItem("Hello");
-console.log(localStorage.getItem("Hello"));
+const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"));
+console.log(leadsFromLocalStorage);
+
+if (leadsFromLocalStorage) {
+  myLeads = leadsFromLocalStorage;
+  renderLeads();
+}
+
+deleteBtn.addEventListener("dblclick", function () {
+  localStorage.clear();
+  myLeads = [];
+  renderLeads();
+});
 
 inputBtn.addEventListener("click", function () {
   myLeads.push(inputEl.value);
   inputEl.value = "";
+  localStorage.setItem("myLeads", JSON.stringify(myLeads));
   renderLeads();
 });
 
